@@ -7,6 +7,13 @@ resources:
 variables:
   tag: '$(Build.BuildId)'
 
+env:
+- ARM_CLIENT_ID: $(ARM_CLIENT_ID)
+- ARM_CLIENT_SECRET: $(ARM_CLIENT_SECRET)
+- ARM_TENANT_ID: $(ARM_TENANT_ID)
+- ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
+- TF_VAR_imagebuild: $(tag)
+
 stages:
 - stage: Build
   displayName: Build image
@@ -21,12 +28,7 @@ stages:
 # pool:
 #   name: self
     steps:
-      env:
-        ARM_CLIENT_ID: $(ARM_CLIENT_ID)
-        ARM_CLIENT_SECRET: $(ARM_CLIENT_SECRET)
-        ARM_TENANT_ID: $(ARM_TENANT_ID)
-        ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
-        TF_VAR_imagebuild: $(tag)
+      
 
     - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV2@2
       displayName: 'Terraform : init'
