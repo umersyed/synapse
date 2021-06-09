@@ -1,0 +1,8 @@
+resource_group_name    = "example-resources786"
+location               = "West Europe"
+keyvault_name          = "examplekeyvault786"
+secret_name            = "sqladminuser"
+secret_value           = "@Aa123456789!"
+storage_name           = "examplestorageacc786"
+storage_fs             = "example786"
+synapse_name           = "example786"
