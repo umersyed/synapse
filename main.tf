@@ -1,3 +1,12 @@
+terraform {
+    backend "azurerm" {
+        resource_group_name  = "tf-rg"
+        storage_account_name = "tfstorage123"
+        container_name       = "tfstate"
+        key                  = "synapse.tfstate"
+    }
+}
+
 resource "azurerm_resource_group" "example" {
   name     = var.resource_group_name
   location = var.location

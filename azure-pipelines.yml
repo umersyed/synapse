@@ -1,15 +1,61 @@
-# Docker
-# Build a Docker image 
-# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
-
 trigger:
 - master
 
 resources:
 - repo: self
 
-variables:
-  tag: '$(Build.BuildId)'
+pool:
+  name: self
+steps:
+- task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV2@2
+  displayName: 'Terraform : init'
+  inputs:
+    backendServiceArm: synapse
+    backendAzureRmResourceGroupName: 'tf-rg'
+    backendAzureRmStorageAccountName: tfstorage123
+    backendAzureRmContainerName: tfstate
+    backendAzureRmKey: synapse.tfstate
+
+- task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV2@2
+  displayName: 'Terraform : plan'
+  inputs:
+    command: plan
+    environmentServiceNameAzureRM: synapse
+
+- task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV2@2
+  displayName: 'Terraform : validate and apply'
+  inputs:
+    command: apply
+    commandOptions: '-auto-approve'
+    environmentServiceNameAzureRM: synapse
+
+steps:
+- task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV2@2
+  displayName: 'Terraform : init'
+  inputs:
+    backendServiceArm: synapse
+    backendAzureRmResourceGroupName: 'tf-rg'
+    backendAzureRmStorageAccountName: tfstorage123
+    backendAzureRmContainerName: tfstate
+    backendAzureRmKey: synapse.tfstate
+	
+steps:
+- task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV2@2
+  displayName: 'Terraform : plan'
+  inputs:
+    command: plan
+    environmentServiceNameAzureRM: synapse
+
+steps:
+- task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV2@2
+  displayName: 'Terraform : validate and apply'
+  inputs:
+    command: apply
+    commandOptions: '-auto-approve'
+    environmentServiceNameAzureRM: synapse
+
+# variables:
+#   tag: '$(Build.BuildId)'
 
 # stages:
 # - stage: Build
@@ -29,27 +75,27 @@ variables:
     #     tags: |
     #       $(tag)
     
-- stage: Provision
-  displayName: 'Terraforming on Azure...'
-  dependsOn: Build
-  jobs:
-  - job: Provision
-    displayName: 'Provisioning synapse analytics workspace'
-    pool: self
-      #vmImage: 'ubuntu-latest'
-    variables: 
-    - group: TerraformEnvVars
-    steps:
-    - script: |
-        set -e
+# - stage: Provision
+#   displayName: 'Terraforming on Azure...'
+#   dependsOn: Build
+#   jobs:
+#   - job: Provision
+#     displayName: 'Provisioning synapse analytics workspace'
+#     pool: self
+#       #vmImage: 'ubuntu-latest'
+#     variables: 
+#     - group: TerraformEnvVars
+#     steps:
+#     - script: |
+#         set -e
 
-        terraform init -input=false
-        terraform apply -input=false -auto-approve
-      name: 'RunTerraform'
-      displayName: 'Run Terraform'
-      env:
-        ARM_CLIENT_ID: $(ARM_CLIENT_ID)
-        ARM_CLIENT_SECRET: $(ARM_CLIENT_SECRET)
-        ARM_TENANT_ID: $(ARM_TENANT_ID)
-        ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
-        TF_VAR_imagebuild: $(tag)
+#         terraform init -input=false
+#         terraform apply -input=false -auto-approve
+#       name: 'RunTerraform'
+#       displayName: 'Run Terraform'
+#       env:
+#         ARM_CLIENT_ID: $(ARM_CLIENT_ID)
+#         ARM_CLIENT_SECRET: $(ARM_CLIENT_SECRET)
+#         ARM_TENANT_ID: $(ARM_TENANT_ID)
+#         ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
+#         TF_VAR_imagebuild: $(tag)
