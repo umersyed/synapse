@@ -41,3 +41,16 @@ variable "synapse_name" {
   description = "synapse workspace name"
 
 }
+
+variable "client_id" {
+  type        = string
+  description = "Key Vault Secret value in Azure"
+  sensitive   = true
+}
+
+variable "client_secret" {
+  type        = string
+  description = "Key Vault Secret value in Azure"
+  sensitive   = true
+}
+
