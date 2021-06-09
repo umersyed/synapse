@@ -13,6 +13,7 @@ stages:
     pool: self
     variables: 
     - group: TerraformEnvVars
+    - tag: '$(Build.BuildId)'
     
 # pool:
 #   name: self
@@ -23,7 +24,7 @@ stages:
         ARM_TENANT_ID: $(ARM_TENANT_ID)
         ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
         TF_VAR_imagebuild: $(tag)
-        
+
     - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV2@2
       displayName: 'Terraform : init'
       inputs:
