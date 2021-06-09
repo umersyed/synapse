@@ -30,3 +30,4 @@ steps:
     commandOptions: '-auto-approve'
     environmentServiceNameAzureRM: synapse
 
+#test
