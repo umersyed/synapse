@@ -13,15 +13,17 @@ stages:
     pool: self
     variables: 
     - group: TerraformEnvVars
-    env:
+    
+# pool:
+#   name: self
+    steps:
+      env:
         ARM_CLIENT_ID: $(ARM_CLIENT_ID)
         ARM_CLIENT_SECRET: $(ARM_CLIENT_SECRET)
         ARM_TENANT_ID: $(ARM_TENANT_ID)
         ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
         TF_VAR_imagebuild: $(tag)
-# pool:
-#   name: self
-    steps:
+        
     - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV2@2
       displayName: 'Terraform : init'
       inputs:
