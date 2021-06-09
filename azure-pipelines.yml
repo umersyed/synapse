@@ -4,6 +4,9 @@ trigger:
 resources:
 - repo: self
 
+variables:
+  tag: '$(Build.BuildId)'
+
 stages:
 - stage: Build
   displayName: Build image
@@ -13,7 +16,7 @@ stages:
     pool: self
     variables: 
     - group: TerraformEnvVars
-    - tag: '$(Build.BuildId)'
+    
     
 # pool:
 #   name: self
