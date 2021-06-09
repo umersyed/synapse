@@ -13,26 +13,26 @@ stages:
     pool: self
 # pool:
 #   name: self
-steps:
-- task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV2@2
-  displayName: 'Terraform : init'
-  inputs:
-    backendServiceArm: synapse
-    backendAzureRmResourceGroupName: 'tf-rg'
-    backendAzureRmStorageAccountName: tfstorage123
-    backendAzureRmContainerName: tfstate
-    backendAzureRmKey: synapse.tfstate
+    steps:
+    - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV2@2
+      displayName: 'Terraform : init'
+      inputs:
+        backendServiceArm: synapse
+        backendAzureRmResourceGroupName: 'tf-rg'
+        backendAzureRmStorageAccountName: tfstorage123
+        backendAzureRmContainerName: tfstate
+        backendAzureRmKey: synapse.tfstate
 
-- task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV2@2
-  displayName: 'Terraform : plan'
-  inputs:
-    command: plan
-    environmentServiceNameAzureRM: synapse
+    - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV2@2
+      displayName: 'Terraform : plan'
+      inputs:
+        command: plan
+        environmentServiceNameAzureRM: synapse
 
-- task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV2@2
-  displayName: 'Terraform : validate and apply'
-  inputs:
-    command: apply
-    commandOptions: '-auto-approve'
-    environmentServiceNameAzureRM: synapse
+    - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV2@2
+      displayName: 'Terraform : validate and apply'
+      inputs:
+        command: apply
+        commandOptions: '-auto-approve'
+        environmentServiceNameAzureRM: synapse
 
