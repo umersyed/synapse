@@ -29,30 +29,7 @@ steps:
     commandOptions: '-auto-approve'
     environmentServiceNameAzureRM: synapse
 
-steps:
-- task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV2@2
-  displayName: 'Terraform : init'
-  inputs:
-    backendServiceArm: synapse
-    backendAzureRmResourceGroupName: 'tf-rg'
-    backendAzureRmStorageAccountName: tfstorage123
-    backendAzureRmContainerName: tfstate
-    backendAzureRmKey: synapse.tfstate
-	
-steps:
-- task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV2@2
-  displayName: 'Terraform : plan'
-  inputs:
-    command: plan
-    environmentServiceNameAzureRM: synapse
 
-steps:
-- task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV2@2
-  displayName: 'Terraform : validate and apply'
-  inputs:
-    command: apply
-    commandOptions: '-auto-approve'
-    environmentServiceNameAzureRM: synapse
 
 # variables:
 #   tag: '$(Build.BuildId)'
@@ -75,6 +52,7 @@ steps:
     #     tags: |
     #       $(tag)
     
+<<<<<<< HEAD
 # - stage: Provision
 #   displayName: 'Terraforming on Azure...'
 #   dependsOn: Build
@@ -99,3 +77,29 @@ steps:
 #         ARM_TENANT_ID: $(ARM_TENANT_ID)
 #         ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
 #         TF_VAR_imagebuild: $(tag)
+=======
+# - stage: Provision
+#   displayName: 'Terraforming on Azure...'
+#   dependsOn: Build
+#   jobs:
+#   - job: Provision
+#     displayName: 'Provisioning synapse analytics workspace'
+#     pool: self
+#       #vmImage: 'ubuntu-latest'
+#     variables: 
+#     - group: TerraformEnvVars
+#     steps:
+#     - script: |
+#         set -e
+
+#         terraform init -input=false
+#         terraform apply -input=false -auto-approve
+#       name: 'RunTerraform'
+#       displayName: 'Run Terraform'
+#       # env:
+#       #   ARM_CLIENT_ID: $(ARM_CLIENT_ID)
+#       #   ARM_CLIENT_SECRET: $(ARM_CLIENT_SECRET)
+#       #   ARM_TENANT_ID: $(ARM_TENANT_ID)
+#       #   ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
+#       #   TF_VAR_imagebuild: $(tag)
+# >>>>>>> abd722c015809788c88e8abd17537c3c4d24e034
