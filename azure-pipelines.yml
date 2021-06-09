@@ -4,8 +4,15 @@ trigger:
 resources:
 - repo: self
 
-pool:
-  name: self
+stages:
+- stage: Build
+  displayName: Build image
+  jobs:  
+  - job: Build
+    displayName: Build
+    pool: self
+# pool:
+#   name: self
 steps:
 - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV2@2
   displayName: 'Terraform : init'
