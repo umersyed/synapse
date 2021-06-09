@@ -1,10 +1,10 @@
 terraform {
-    backend "azurerm" {
-        resource_group_name  = "tf-rg"
-        storage_account_name = "tfstorage123"
-        container_name       = "tfstate"
-        key                  = "synapse.tfstate"
-    }
+  backend "azurerm" {
+    resource_group_name  = "tf-rg"
+    storage_account_name = "tfstorage123"
+    container_name       = "tfstate"
+    key                  = "synapse.tfstate"
+  }
 }
 
 resource "azurerm_resource_group" "example" {
@@ -22,7 +22,7 @@ resource "azurerm_key_vault" "example" {
   tenant_id                   = data.azurerm_client_config.current.tenant_id
   soft_delete_retention_days  = 7
   purge_protection_enabled    = false
-  
+
 
   sku_name = "standard"
 
@@ -32,7 +32,7 @@ resource "azurerm_key_vault" "example" {
 
     key_permissions = [
       "Get",
-      
+
     ]
 
     secret_permissions = [

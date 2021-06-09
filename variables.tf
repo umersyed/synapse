@@ -27,17 +27,17 @@ variable "secret_value" {
 variable "storage_name" {
   type        = string
   description = "storage name"
-  
+
 }
 
 variable "storage_fs" {
   type        = string
   description = "container name"
-  
+
 }
 
 variable "synapse_name" {
   type        = string
   description = "synapse workspace name"
-  
+
 }
